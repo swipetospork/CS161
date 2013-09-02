@@ -44,7 +44,7 @@ public class Assign1
     public static void printArr(int A[], int size)
     {
 
-        int counter = 0;  
+        int counter = 0;   //How many elements of A [] have been printed
 
         while (counter < size)
         {
@@ -66,7 +66,11 @@ public class Assign1
     //   is followed by a newline.
     public static void printArrFor(int A[], int size)
     {
-         // fill in code here
+        for (int i=0; i < size; i++)
+        {
+            System.out.print(A[i] + " ");
+        }
+        System.out.println();
     }
 
     //  Menu option 4.  Use a do-while loop to print out the contents of 
@@ -79,7 +83,14 @@ public class Assign1
     //   is followed by a newline.
     public static void printArrDo (int A[], int size)
     {
-         // fill in code here
+        int i = 0; // Counter to go through A []
+        do
+        {
+            System.out.print (A[i] + " ");
+            i++;
+        }
+        while (i < size);
+        System.out.println();
     }
 
     // Menu option 5.  Find the maximum value in an array of integers.
@@ -88,7 +99,17 @@ public class Assign1
     //   value that occurs in A[0..size-1]
     public static int arrayMax(int A[], int size)
     {
-       return 0;  // Get rid of this and fill in code
+       int max = A[0]; // Maximum value found in the array
+       int i = 1; // Counter to go through A []
+       while (i < size)
+       {
+        if (A[i] > max)
+        {
+            max = A[i];
+        }
+        i++;
+       }
+       return max;
     }
 
     // Menu option 6.  Find the sum of a section of an array.
@@ -96,7 +117,12 @@ public class Assign1
     // postcondition:  The sum of elements in A[i..j] has been returned
     public static int arraySectSum(int [] A, int i, int j)
     {
-       return 0;  // Get rid of this and fill in code
+        int sum = 0; // Total sum of all elements A [] in the section that has been given as a parameter
+       for (i = i; i <= j; i++)
+       {
+        sum += A[i];
+       }
+       return sum;
     }
 
     // Menu option 7.  Swap 2 elements of an array. 
@@ -105,7 +131,10 @@ public class Assign1
     //  swapped
     public static void swap (int A[], int i, int j)
     {
-        // fill in code here
+        int temp; // Temporary place holder for a value of A []
+        temp = A[i];
+        A[i] = A[j];
+        A[j] = temp; 
     }
 
 
@@ -116,7 +145,13 @@ public class Assign1
     // Hint:  You should make calls to 'swap' from within the method.
     public static void arrSectReverse (int [] A, int i, int j)
     {
-         // fill in code here
+        printArrFor(A,10);
+        for (i = i; i < j; i++)
+        {
+            swap (A, i, j);
+            j--;
+        }  
+        printArrFor(A, 10); 
     }
 
     // Menu option 9.  Concatinate 2 arrays.
@@ -126,7 +161,16 @@ public class Assign1
     //   and a reference to this array has been returned
     public static int [] concatArrs(int [] A1, int size1, int[] A2, int size2)
     {
-        return new int[1]; // get rid of this and fill in code
+        int [] arrayBoth = new int [size1 + size2];
+        for ( int i = 0; i < size1; i++)
+        {
+            arrayBoth[i] = A1[i];
+        }
+        for (int j = 0; j < size2; j++)
+        {
+            arrayBoth[size1 + j] = A2[j];
+        }
+        return arrayBoth;
     }
 
     // Menu option 10.  Interleave 2 arrays.
@@ -143,7 +187,49 @@ public class Assign1
     //   A reference to this array has been returned
     public static int [] interleave(int [] A1, int size1, int[] A2, int size2)
     {
-        return new int[1];  // get rid of this and fill in code
+        int j = 0; // Counter to go through arrayBoth []
+        int k = 0; // Counter to go through A []
+        int [] arrayBoth = new int [size1 + size2];
+        if (size1 == size2)
+        {
+            for (int i = 0; i <= (size1 + size2 -2); i+=2)
+            {
+                arrayBoth [i] = A1[j]; 
+                arrayBoth [i + 1] = A2[j];
+                j++;
+            }
+        }
+        else if (size1 < size2)
+        {
+            while (j < size2)
+            {
+                for (j = j; j < size1; j++)
+                {
+                    arrayBoth [k] = A1 [j];
+                    arrayBoth [k + 1] = A2 [j];
+                    k += 2;
+                }
+                arrayBoth [k] = A2 [j];
+                j++;
+                k++;
+            }
+        }
+        else if (size2 < size1)
+        {
+            while (j < size1)
+            {
+                for (j = j; j < size2; j++)
+                {
+                    arrayBoth [k] = A1 [j];
+                    arrayBoth [k + 1] = A2 [j];
+                    k += 2;
+                }
+                arrayBoth [k] = A1 [j];
+                j++;
+                k++;
+            }
+        }
+        return arrayBoth; 
     }
 
     // Menu option 11.  Merge 2 arrays
@@ -155,7 +241,19 @@ public class Assign1
     //   in sorted order.  A reference to this array has been returned.
     public static int [] merge(int [] A1, int size1, int [] A2, int size2)
     {
-        return new int[1];  // get rid of this and fill in code
+        int [] arraySorted = new int [size1 + size2];
+        arraySorted = interleave(A1,size1,A2,size2);
+        for (int i = 0; i < size1 + size2; i++)
+        {
+            for (int j = 1; j < size1 + size2; j++)
+            {
+                if (arraySorted [j] < arraySorted[j - 1])
+                {
+                    swap(arraySorted, j, j-1);
+                }
+            }
+        }
+        return arraySorted;  
     }
 
     // Menu option 12.  Print out the ordered pairs.
@@ -168,7 +266,16 @@ public class Assign1
     //    has been counted and this count has been returned.
     public static int orderedPairs(int [] A, int size)
     {
-        return 0;  // get rid of, fill in code
+        int count = 0; // Count of how many ordered pairs were printed
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                    System.out.println ("(" + A[i] + "," + A[j] + ")");
+                    count++;
+            }
+        }
+        return count;
     }
  
     // Menu option 13.  Print out the ordered 4-tuples
@@ -181,7 +288,22 @@ public class Assign1
     //   has been counted and this count has been returned.
     public static int ordered4Tuples (int [] A, int size)
     {
-        return 0; // get rid of, fill in code
+        int count = 0; // Count of how many 4-tuples were printed
+        for (int h = 0; h < size; h++)
+        {
+           for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                    {
+                        for (int l = 0; l < size; l++)
+                            {
+                                System.out.println("(" + A[h] + "," + A[i] + "," + A[j] + "," + A[l] + ")" );
+                                count++;
+                            }
+                    }
+            }
+        }
+        return count; 
     }
 
     // Menu option 14.  Print out the ordered pairs.
@@ -194,7 +316,19 @@ public class Assign1
     //   printed out has been counted and the count has been returned.
     public static int orderedPairsNoRepeats(int [] A, int size)
     {
-        return 0; // get rid of, fill in code
+        int count = 0; // Count of how many ordered pairs were printed
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                if (i != j)
+                {
+                    System.out.println ("(" + A[i] + "," + A[j] + ")");
+                    count++;
+                }
+            }
+        }
+        return count;
     }
  
     // Menu option 15.  Print out the 4-tuples that hape no repeats
@@ -208,7 +342,32 @@ public class Assign1
     //   has been returned 
     public static int ordered4TuplesNoRepeats(int [] A, int size)
     {
-        return 0; // fill in code here
+        int count = 0; // count of how many 4-tuples were printed
+        for (int h = 0; h < size; h++)
+        {
+           for (int i = 0; i < size; i++)
+                {
+                    if (i!=h)
+                        {
+                            for (int j = 0; j < size; j++)
+                                {
+                                    if (j!=i && j!=h)
+                                        {
+                                            for (int k = 0; k < size; k++)
+                                                {
+                                                    if (k!=j && k!=h && k!=i)
+                                                        {
+                                                             System.out.println("(" + A[h] + "," + A[i] + "," + A[j] + "," + A[k] + ")" );
+                                                            count++;
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                }
+            
+        }
+        return count; 
     }
 
     // Menu option 16.  Print out the subsets of size 2.
@@ -222,7 +381,16 @@ public class Assign1
     //   number of subsets printed has been returned.
     public static int twoSubsets(int [] A, int size)
     {
-        return 0;  // fill in code here
+        int count = 0; // count of how many subsets of two were printed
+        for (int i=0; i<size; i++)
+            {
+                for (int j=i+1; j<size; j++)
+                    {
+                        System.out.println("{" + A[i] + "," + A[j] + "}");
+                        count++;
+                     }
+            }
+        return count;
     }
 
     // Menu option 17.  Print out the subsets of size 4
@@ -234,9 +402,25 @@ public class Assign1
     //   {A[h], A[i], A[j], A[k]} in the curly braces is dictated by h < i < j < k.  
     //   The count of the number of subsets printed has been returned.
     public static int fourSubsets(int [] A, int size)
-    {
-        return 0;  // Fill in code
+     {
+        int count = 0; // count of how many subsets of 4 were printed
+        for (int i=0; i<size; i++)
+            {
+                for (int j=i+1; j<size; j++)
+                    {
+                        for (int k=j+1; k<size; k++)
+                            {
+                                for (int l=k+1; l<size; l++)
+                                    {
+                                        System.out.println("{" + A[i] + "," + A[j] + "," + A[k] + "," + A[l] + "}");
+                                        count++;
+                                    }
+                            }
+                    }
+            }
+        return count;
     }
+    
     // Menu option 18. Create a 2-D array.
     // precondition:  dimension >= 1
     // postcondition:  A 2-d dimension x dimension array has been
@@ -246,9 +430,16 @@ public class Assign1
     //   A reference to this array has been returned
     public static int [] [] multTable(int dimension)
     {
-        return new int[1][];  // Fill in code
+        int [] [] array2D = new int [dimension] [dimension];
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                array2D [i] [j] = i * j;
+            }
+        }
+        return array2D;  // Fill in code
     }
-
     // Menu option 18.  Print the 2-D array.
     // preconditions:  0 < rows <= A.length.  For each row i from
     //   0 through rows-1, 0 < columns <= A[i].length
@@ -257,7 +448,14 @@ public class Assign1
     //   put a space between each element.
     public static void print2dArr(int [] [] A, int rows, int columns)
     {
-        // fill in code here
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                System.out.print( A[i] [j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     // Menu option 19: Factorial
@@ -269,7 +467,19 @@ public class Assign1
     //            If n == 1, 1 has been returned.
     public static int factorial(int n)
     {
-        return 0;  // fill in code here
+        int f = 1; // the value of i factorial until i = n, then its the value of n factorial
+        if (n==0)
+        {
+            return 1;
+        }
+        else if (n != 0)
+        {
+            for (int i = 1; i <= n; i++)
+            {
+                f *= i;
+            }
+        }
+        return f;
     }
 
 /******************************************************************
@@ -278,66 +488,66 @@ public class Assign1
  *   (Insert your answers as part of the comments here):
  *
  * 1.  How many tuples does orderedPairs generate when given a set with two integers?  
- *        Answer:
+ *        Answer:4
  * 2.  How many tuples does orderedPairs generate when given a set with three integers?  
- *        Answer:
+ *        Answer:9
  * 3.  How many tuples does orderedPairs generate when given a set with five integers?  
- *        Answer:
+ *        Answer:25
  * 4.  Guess a general formula for the number of pairs it generates when given a set
  *     n integers.  Express your answer as a formula involving n. 
- *        Answer:
+ *        Answer: n^2
  *
- * 5.  How many tuples does ordered4Tuples generate when given a set with two integers?  Answer:
- * 6.  How many tuples does ordered4Tuples generate when given a set with three integers?  Answer:
- * 7.  How many tuples does ordered4Tuples generate when given a set with four integers?  Answer:
+ * 5.  How many tuples does ordered4Tuples generate when given a set with two integers?  Answer:16
+ * 6.  How many tuples does ordered4Tuples generate when given a set with three integers?  Answer:81
+ * 7.  How many tuples does ordered4Tuples generate when given a set with four integers?  Answer:256
  * 8.  Guess a general formula for the number of tuples it generates when given a set with
  *     n integers.  Express your answer as a formula involving n.
- *        Answer:
+ *        Answer: n^4
  *
  * 9.  How many tuples does orderedPairsNoRepeats generate when given a set with two integer?  
- *        Answer:
+ *        Answer:2
  * 10. How many tuples does it generate when given a set with three integers?  
- *        Answer:
+ *        Answer:6
  * 11. How many does it generate when given a set with four integer?  
- *        Answer:
+ *        Answer:12
  * 12. Guess a general formula for the number of tuples it generates when given a set with
  *     n integers.  Express your answer as a formula involving n.
- *        Answer:
+ *        Answer: n * (n-1)
  *
  * 13. How many tuples does ordered4TuplesNoRepeats generate when given a set with four integers?  
- *        Answer:
+ *        Answer:24
  * 14. How many tuples does it generate when given a set with five integers?  
- *        Answer:
+ *        Answer:120
  * 15. How many tuples does it generate when given a set with six integers?  
- *        Answer:
+ *        Answer:360
  * 16. How many does it generate when given a set with seven integers?
- *        Answer:
+ *        Answer:840
  * 17. Guess a general formula for the number of tuples it generates when given a set with
  *     n integers.  Express your answer as a formula involving n.
- *        Answer:
+ *        Answer: 
  *
  * 18. How many sets does twoSubsets generate when given a set with two integer?  
- *        Answer:
+ *        Answer:1
  * 19. How many sets  does it generate when given a set with three integers?  
- *        Answer:
+ *        Answer:3
  * 20. How many does it generate when given a set with four integer?  
- *        Answer:
+ *        Answer:6
  * 21. What do you think the ratio is between the number of pairs that orderedPairsNoRepeats will 
  *       generate and the number of sets twoSubsets will generate when given a list of n integers.
- *        Answer:
+ *        Answer: 2:1
  * 22. Guess a general formula for the number of sets it generates when given a list with
  *     n integers.  Express your answer as a formula involving n.  You may find it helpful
  *     to combine your answers from problems 12 and 21.
- *        Answer:
+ *        Answer: (n * (n-1)) / 2
  *
  * 23. By doing similar experiments with fourSubsets and comparing them with your answers
  *     from problems 13-16, guess the ratio between the number of tuples that
  *     ordered4TuplesNoRepeats and the number of sets that fourSubsets will return when they 
  *     are both given a list of the same size?
- *        Answer:
+ *        Answer: 24 : 1
  * 24. By combining your answers from problems 17 and 23, guess a general formula for the
  *     number of sets fourSubsets will generate when given a list of size n?
- *        Answer:
+ *        Answer: 
  * 25. (Glory point)  Give a formula ratio of the following two value:
  *        The number of k-tuples with no repeats drawn from a list of length n
  *        The number of subsets of size k drawn from a list of length n
@@ -345,7 +555,7 @@ public class Assign1
  *
  * 26.  Experiment to find the largest value of n for which factorial(n) gives a correct
  *      answer; beyond that point, integer overflow undermines the answer.
- *        Answer:
+ *        Answer: 12
 ***************************************************************************************/ 
 
     
