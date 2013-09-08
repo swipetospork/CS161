@@ -145,13 +145,11 @@ public class Assign1
     // Hint:  You should make calls to 'swap' from within the method.
     public static void arrSectReverse (int [] A, int i, int j)
     {
-        printArrFor(A,10);
         for (i = i; i < j; i++)
         {
             swap (A, i, j);
             j--;
         }  
-        printArrFor(A, 10); 
     }
 
     // Menu option 9.  Concatinate 2 arrays.

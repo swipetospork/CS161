@@ -57,7 +57,8 @@ public class Date
    //    set the day of week to s
    private void setDayOfWeek(String s)
    {
-   		if (s == "Sunday" || s == "Monday" || s == "Tuesday" || s == "Wednesday" || s == "Thursday" || s== "Friday" || s== "Saturday")
+   		if (s.equals ("Sunday") || s.equals ("Monday") || s.equals ("Tuesday") || s.equals ("Wednesday") || s.equals ("Thursday")
+   		 || s.equals ("Friday") || s.equals ("Saturday"))
    		 {
    		 	_dayOfWeek = s;
    		 }
@@ -110,6 +111,25 @@ public class Date
    		setMonth(month);
    		setDay(day);
    		setYear(year);
+   		_dayOfWeek = "";
+   		if (getMonth() == 0)
+   		{
+   			_month = 0;
+   			_day = 0;
+   			_year = 0;
+   		}
+   		if (getDay() == 0)
+   		{
+   			_month = 0;
+   			_day = 0;
+   			_year = 0;
+   		}
+   		if (getYear() == 0)
+   		{
+   			_month = 0;
+   			_day = 0;
+   			_year = 0;
+   		}
    }
 
    // constructor.  It should set the day of week to be the given month, day, year,
@@ -118,11 +138,39 @@ public class Date
    //   date, 0/0/0 "".
    public Date(int month, int day, int year, String DayOfWeek)
     {
-    	setMonth(month);
+   		setMonth(month);
    		setDay(day);
-   		setYear(year);
+		setYear(year);
    		setDayOfWeek(DayOfWeek);
-    }
+   		if (getMonth() == 0)
+   		{
+   			_month = 0;
+   			_day = 0;
+   			_year = 0;
+   			_dayOfWeek = "";
+   		}
+   		if (getDay() == 0)
+   		{
+   			_month = 0;
+   			_day = 0;
+   			_year = 0;
+   			_dayOfWeek = "";
+   		}
+   		if (getYear() == 0)
+   		{
+   			_month = 0;
+   			_day = 0;
+   			_year = 0;
+   			_dayOfWeek = "";
+   		}
+   		if (getDayOfWeek() == (null))
+   		{
+   			_month = 0;
+   			_day = 0;
+   			_year = 0;
+   			_dayOfWeek = "";
+   		}
+   }
 
    /* Create a string representation of the date in standard North American
       m/d/yyyy format, followed by day of week, which can be a null string */
@@ -139,7 +187,7 @@ public class Date
    {
       // Here is something to get you started.  Use string concatenation
       //   to get integers into string format ...
-      String s = getMonth() + "/" + getDay() + "/" + getYear() + getDayOfWeek();
+      String s = getMonth() + "/" + getDay() + "/" + getYear() + " " + getDayOfWeek();
       return s;
    }
 
@@ -208,6 +256,7 @@ public class Date
           if (choice == 1)
           {
              Date date = new Date ();
+            System.out.println(date.toString()); 
           }
           else if (choice == 2)
           {
@@ -218,6 +267,7 @@ public class Date
           	 System.out.println("Enter a year");
           	 int Year = Input.nextInt();
           	 Date date = new Date (Month, Day, Year);
+          	 System.out.println(date.toString());
           }
           else if (choice == 3)
           {
@@ -228,8 +278,9 @@ public class Date
           	 System.out.println("Enter a year");
           	 int Year = Input.nextInt();
           	 System.out.println("Enter a Day of the week");
-          	 String DayOfWeek = Input.nextLine();
+          	 String DayOfWeek = Input.next();
           	 Date date = new Date (Month, Day, Year, DayOfWeek);
+          	 System.out.println(date.toString());
           }
       } while (choice != 0);
     }
