@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+/Users/benjenkins/school/CS161/Assign1/.metadata/.plugins/org.eclipse.jdt.core
