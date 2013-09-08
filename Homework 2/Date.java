@@ -107,55 +107,22 @@ public class Date
    //   date, 0/0/0 "".
    public Date(int month, int day, int year)
    {
-   		if (month >= 1 && month <= 12)
-   			{
-   				if (day >= 1 && day <= 31)
-   					{
-   						if (year >= 1752)
-   							{
-   								setMonth (month);
-   								setDay (day);
-   								setYear (year);
-   								setDayOfWeek ("");
-   							}
-   					}
-   			}
-   		else
-   			{
-   				_month = 0;
-   				_day = 0;
-   				_year = 0;
-   				_dayOfWeek = "";
-   			}
+   		setMonth(month);
+   		setDay(day);
+   		setYear(year);
    }
 
    // constructor.  It should set the day of week to be the given month, day, year,
-   //   and the day of week to be the empty string.
+   //   and the day of week to be the DayOfWeek string.
    //  If the date is not a valid one, it should set it to the canonical invalid
    //   date, 0/0/0 "".
    public Date(int month, int day, int year, String DayOfWeek)
     {
-   		if (month >= 1 && month <= 12)
-   			{
-   				if (day >= 1 && day <= 31)
-   					{
-   						if (year >= 1752)
-   							{
-   								setMonth (month);
-   								setDay (day);
-   								setYear (year);
-   								setDayOfWeek ("");
-   							}
-   					}
-   			}
-   		else
-   			{
-   				_month = 0;
-   				_day = 0;
-   				_year = 0;
-   				_dayOfWeek = "";
-   			}
-   }
+    	setMonth(month);
+   		setDay(day);
+   		setYear(year);
+   		setDayOfWeek(DayOfWeek);
+    }
 
    /* Create a string representation of the date in standard North American
       m/d/yyyy format, followed by day of week, which can be a null string */
@@ -172,7 +139,7 @@ public class Date
    {
       // Here is something to get you started.  Use string concatenation
       //   to get integers into string format ...
-      String s = getMonth() + "/" + getDay() + "/" + getYear();
+      String s = getMonth() + "/" + getDay() + "/" + getYear() + getDayOfWeek();
       return s;
    }
 
@@ -220,17 +187,10 @@ public class Date
       String[] MenuChoices = 
       {
          "0.  Exit",
-         "1.  Set Month",
-         "2.  Set Day",
-         "3.  Set Year",
-         "4.  Set Day of Week",
-         "5.  Date",
-         "6.  Get Month",
-         "7.  Get Day",
-         "8.  Get Year",
-         "9.  Get Day of Week",
-      };
-          
+         "1.  Date",
+         "2.  Date with month, day, year",
+         "3.  Date with month, day, year, and day of week",
+      };   
 
       int choice = -1; // Records the option number the user selected
                          //   from the menu
@@ -247,41 +207,29 @@ public class Date
           System.out.print("\n\n");
           if (choice == 1)
           {
-          	 System.out.println("Enter a month");
-          	 int Month = Input.nextInt();
-             setMonth(Month);
+             Date date = new Date ();
           }
           else if (choice == 2)
           {
-             System.out.println("You can insert code for your second test here.");
+             System.out.println("Enter a month");
+          	 int Month = Input.nextInt();
+          	 System.out.println("Enter a day");
+          	 int Day = Input.nextInt();
+          	 System.out.println("Enter a year");
+          	 int Year = Input.nextInt();
+          	 Date date = new Date (Month, Day, Year);
           }
           else if (choice == 3)
           {
-             System.out.println("You can insert code for your second test here.");
-          }
-          else if (choice == 4)
-          {
-             System.out.println("You can insert code for your second test here.");
-          }
-          else if (choice == 5)
-          {
-             System.out.println("You can insert code for your second test here.");
-          }
-          else if (choice == 6)
-          {
-             System.out.println("You can insert code for your second test here.");
-          }
-          else if (choice == 7)
-          {
-             System.out.println("You can insert code for your second test here.");
-          }
-          else if (choice == 8)
-          {
-             System.out.println("You can insert code for your second test here.");
-          }
-          else if (choice == 9)
-          {
-             System.out.println("You can insert code for your second test here.");
+             System.out.println("Enter a month");
+          	 int Month = Input.nextInt();
+          	 System.out.println("Enter a day");
+          	 int Day = Input.nextInt();
+          	 System.out.println("Enter a year");
+          	 int Year = Input.nextInt();
+          	 System.out.println("Enter a Day of the week");
+          	 String DayOfWeek = Input.nextLine();
+          	 Date date = new Date (Month, Day, Year, DayOfWeek);
           }
       } while (choice != 0);
     }
