@@ -134,7 +134,7 @@ public class Date
    //  one return false.
    public boolean isInLeapYear()
    {
-      if (!isLegal()) return false;
+      if (getYear() < 1752) return false;
       else if (getYear() % 400 == 0) return true;
       else if (getYear() % 100 == 0) return false;
       else if (getYear() % 4 == 0) return true;
@@ -212,10 +212,9 @@ public class Date
    {
       if (isLegal() == false)
       {
-        return "";
-      }
-      int numberOfDays = daysSince1751 ();
-      int day = daysSince1751 () % 7 + 4;
+        return "yall done fucked up";
+      } 
+      int day = (daysSince1751 () +4)  % 7;
       return dayOfTheWeek [day];
    }
 
@@ -235,7 +234,10 @@ public class Date
       String[] MenuChoices = 
       {
          "0.  Exit",
-         "1.  Date(), setMont(), setDay(), setYear(), getMonth(), getDay(), getYear(), isLegal();",
+         "1.  Date()",
+         "2.  Date(m, d, y)",
+         "3.  Date(prompt, scanner)",
+         "4.  daysSince1751()",
          "2.  daysSinceDec31()",
          "3.  days1752ThruLastYr()",
          "4.  daysSince1751()",
@@ -257,11 +259,24 @@ public class Date
           System.out.print("\n\n");
           if (choice == 1)
           {
-             System.out.println("Fill in your own tests here.");
+            Date D = new Date();
+             System.out.println(D.toString());
           }
-          else if (choice == 2)
+          if (choice == 2)
           {
-             System.out.println("Fill in your own tests here, etc.");
+            Date D = new Date(9, 16, 2013);
+             System.out.println(D.toString());
+          }
+          if (choice == 3)
+          {
+            Scanner I = new Scanner (System.in);
+            Date D = new Date("", I);
+             System.out.println(D.toString());
+          }
+          else if (choice == 4)
+          {
+             Date D = new Date(9, 16, 2013);
+             System.out.println(D.daysSinceDec31());
           }
       } while (choice != 0);
     }
