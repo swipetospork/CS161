@@ -7,6 +7,8 @@ public class Date
    private int _year;
    private static int[] MonthLengths
               = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+   private static int[] MonthLengthsLeapYear
+              = {0,31,29,31,30,31,30,31,31,30,31,30,31};
    private static String [] dayOfTheWeek
               = {"", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
    private static int [] MonthSums
@@ -76,11 +78,21 @@ public class Date
     {
       return false;
     }
+    if (getYear() >= 1752 && isInLeapYear())
+      {
+        if (getMonth() > 0 && getMonth() <= 12)
+          {
+            if (getDay() > 0 && getDay() <= MonthLengthsLeapYear [getMonth()])
+            {
+              return true;
+            }
+          }
+      }
     if (getYear() >= 1752)
       {
         if (getMonth() > 0 && getMonth() <= 12)
           {
-            if (getDay() > 0 && getDay() <= MonthLengths [getMonth() +1])
+            if (getDay() > 0 && getDay() <= MonthLengths [getMonth()])
             {
               return true;
             }
@@ -203,7 +215,10 @@ public class Date
    //   of the dates is illegal, it returns 0.
    public int daysUntil(Date date2)
    {
+    if (!isLegal() || !date2.isLegal()){
       return 0;
+    }
+    return date1.daysSince1751() - date2.daysSince1751();
    }
 
    // Return the day of the week that the date falls on.
@@ -237,10 +252,10 @@ public class Date
          "1.  Date()",
          "2.  Date(m, d, y)",
          "3.  Date(prompt, scanner)",
-         "4.  daysSince1751()",
-         "2.  daysSinceDec31()",
-         "3.  days1752ThruLastYr()",
-         "4.  daysSince1751()",
+         "4.  daysSinceDec31()",
+         "5.  daysSince1751()",
+         "6.  days1752ThruLastYr()",
+         "7.  daysSince1751()",
       };
           
 
@@ -275,8 +290,27 @@ public class Date
           }
           else if (choice == 4)
           {
-             Date D = new Date(9, 16, 2013);
+             Scanner I = new Scanner (System.in);
+             Date D = new Date("", I);
              System.out.println(D.daysSinceDec31());
+          }
+          if (choice == 5)
+          {
+            Scanner I = new Scanner (System.in);
+            Date D = new Date("", I);
+            System.out.println(D.daysSince1751());
+          }
+          if (choice == 6)
+          {
+            Scanner I = new Scanner (System.in);
+            Date D = new Date("", I);
+            System.out.println(D.days1752ThruLastYr());
+          }
+          if (choice == 7)
+          {
+            Scanner I = new Scanner (System.in);
+            Date D = new Date("", I);
+            System.out.println(D.daysUntil(D));
           }
       } while (choice != 0);
     }
