@@ -215,10 +215,14 @@ public class Date
    //   of the dates is illegal, it returns 0.
    public int daysUntil(Date date2)
    {
-    if (!isLegal() || !date2.isLegal()){
+    if (!isLegal() || !date2.isLegal())
+    {
       return 0;
-    }return 0;
-    //return date1.daysSince1751() - date2.daysSince1751();
+    }
+    System.out.println (date2);
+    System.out.println (getMonth() + " " + getDay() + " " + getYear());
+    int date1days = daysSince1751();
+    return date2.daysSince1751() - date1days;
    }
 
    // Return the day of the week that the date falls on.
@@ -255,7 +259,7 @@ public class Date
          "4.  daysSinceDec31()",
          "5.  daysSince1751()",
          "6.  days1752ThruLastYr()",
-         "7.  daysSince1751()",
+         "7.  daysUntil()",
       };
           
 

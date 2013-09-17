@@ -24,7 +24,7 @@ public class Hw3Menu
          "4.  daysSinceDec31()",
          "5.  daysSince1751()",
          "6.  days1752ThruLastYr()",
-         "7.  daysSince1751()",
+         "7.  daysUntil()",
       };
           
 
@@ -78,8 +78,9 @@ public class Hw3Menu
           if (choice == 7)
           {
             Scanner I = new Scanner (System.in);
-            Date D = new Date("", I);
-            System.out.println(D.daysUntil(D));
+            Date date1 = new Date("", I);
+            Date date2 = new Date("", I); 
+            System.out.println(date1.daysUntil(date2));
           }
       } while (choice != 0);
     }
