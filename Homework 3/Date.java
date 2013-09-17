@@ -10,7 +10,7 @@ public class Date
    private static int[] MonthLengthsLeapYear
               = {0,31,29,31,30,31,30,31,31,30,31,30,31};
    private static String [] dayOfTheWeek
-              = {"", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+              = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
    private static int [] MonthSums
               = {0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
    private static int [] MonthSumsLeapYear
@@ -217,8 +217,8 @@ public class Date
    {
     if (!isLegal() || !date2.isLegal()){
       return 0;
-    }
-    return date1.daysSince1751() - date2.daysSince1751();
+    }return 0;
+    //return date1.daysSince1751() - date2.daysSince1751();
    }
 
    // Return the day of the week that the date falls on.
@@ -227,7 +227,7 @@ public class Date
    {
       if (isLegal() == false)
       {
-        return "yall done fucked up";
+        return "";
       } 
       int day = (daysSince1751 () +4)  % 7;
       return dayOfTheWeek [day];
