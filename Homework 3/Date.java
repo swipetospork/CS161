@@ -219,8 +219,6 @@ public class Date
     {
       return 0;
     }
-    System.out.println (date2);
-    System.out.println (getMonth() + " " + getDay() + " " + getYear());
     int date1days = daysSince1751();
     return date2.daysSince1751() - date1days;
    }
