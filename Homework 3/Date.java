@@ -231,7 +231,7 @@ public class Date
       {
         return "";
       } 
-      int day = (daysSince1751 () +4)  % 7;
+      int day = (daysSince1751 () +5)  % 7;
       return dayOfTheWeek [day];
    }
 
