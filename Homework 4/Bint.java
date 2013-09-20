@@ -75,8 +75,17 @@ public class Bint
        //
        //  That's four divisions, so floor(log_b n) = 4
        //
-       //  Notice that floor(log_b 1) = 1
-       return 0;
+       //  Notice that floor(log_b 1) = 0
+       int count = 0;
+       while (n > 1)
+	   {
+	       n /= b;
+	       if (n > 0)
+		   {
+		       count ++;
+		   }
+	   }
+       return count;
    }
 
    // find the ceiling(log_b n)
@@ -105,7 +114,26 @@ public class Bint
        //  Divide 3 by two to get 2.  (round up from 1.5)
        //  Divide 2 by two to get 1.
        //  That's five divisions, so ceiling(log_b n) = 5
-       return 0;
+       int count = 0;
+       while (n > 1)
+	   {
+	       if (n % b == 0){
+		   n /= b;
+		   // if (n > 0)
+		       // {
+			   count ++;
+			   //}
+	       }
+	       else{
+		  n /= b;
+		  // if (n > 0)
+		  //  {
+			  count ++;
+			  //  }
+		  n++;
+	       }
+	   }
+       return count;
    }
 
     // An algorithm for finding the binary digits of a non-negative integer n, from
@@ -353,11 +381,15 @@ public class Bint
           // "1.  logFloor, logCeiling",
           if (choice == 1)
           {
-             System.out.print("Enter a non-negative integer:  ");
-             Input.nextInt();
-             System.out.print("The floor of the log of that number is:  ");     // insert calls 
-             System.out.print("The ceiling of the log of that number is:  ");    //  here
+	     Bint ni = new Bint();
+             System.out.print("Enter a non-negative integer n >= 1:  ");
+             int n = Input.nextInt();
+	     System.out.print("Enter a non-negative integer b >= 2:  ");
+             int b = Input.nextInt();
+             System.out.println("The floor of the log of that number is: " + ni.logFloor (n, b));     // insert calls 
+             System.out.println("The ceiling of the log of that number is: " + ni.logCeiling (n, b));    //  here
           }
+
           // "2.  Bint(), toString()",
           if (choice == 2)
           {
