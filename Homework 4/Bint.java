@@ -78,13 +78,13 @@ public class Bint
        //  Notice that floor(log_b 1) = 0
        int count = 0;
        while (n > 1)
-	   {
-	       n /= b;
-	       if (n > 0)
-		   {
-		       count ++;
-		   }
-	   }
+     {
+         n /= b;
+         if (n > 0)
+       {
+           count ++;
+       }
+     }
        return count;
    }
 
@@ -116,23 +116,23 @@ public class Bint
        //  That's five divisions, so ceiling(log_b n) = 5
        int count = 0;
        while (n > 1)
-	   {
-	       if (n % b == 0){
-		   n /= b;
-		   // if (n > 0)
-		       // {
-			   count ++;
-			   //}
-	       }
-	       else{
-		  n /= b;
-		  // if (n > 0)
-		  //  {
-			  count ++;
-			  //  }
-		  n++;
-	       }
-	   }
+     {
+         if (n % b == 0){
+       n /= b;
+       // if (n > 0)
+           // {
+         count ++;
+         //}
+         }
+         else{
+      n /= b;
+      // if (n > 0)
+      //  {
+        count ++;
+        //  }
+      n++;
+         }
+     }
        return count;
    }
 
@@ -186,8 +186,14 @@ public class Bint
    //  in position index to be val and returns true to indicate success; 
    //  otherwise it does nothing and returns false.
    {
-       return false;
-   }
+        if(index >= 0 && index <= _length){
+            _Digits[index] = val;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
    private boolean getDigit (int index)
    // precondition:  'this' is in the prescribed format
@@ -195,6 +201,10 @@ public class Bint
    //   if 0 <= index < _length; it returns false (0) if index is outside of
    //   this range.
    {
+       if (0 <= index && index <= _length)
+      {
+        return _Digits [index];
+      }
        return false;
    }
 
@@ -202,7 +212,7 @@ public class Bint
    // preconditions:  none
    // postcondition:  _Digits points to the Digits array
    {
-       return;  
+       _Digits = Digits; 
    }
 
    // default constructor:  assigns usual representation of 0
@@ -224,7 +234,25 @@ public class Bint
    // Hints:  Handle the case of 0 separately; use logFloor to help
    //  you figure out how big an array to allocate.
    {
-   }
+        setLength( logFloor(val, 2) + 1);
+        _Digits = new boolean[_length]; 
+        if(val < 0){
+            setLength(0);
+            _Digits = null;
+        } 
+        
+        if( val >= 0){
+            for(int i=getLength()-1; i>=0; i--){
+                if(val % 2 == 0){
+                  setDigit (i, false);
+                }
+                else{
+                  setDigit(i, true);
+                }
+                val = val/2;
+            }
+        }
+    }
 
    // copy constructor;  creates a copy of ni
    public Bint (Bint ni)
@@ -232,6 +260,12 @@ public class Bint
    // postcondition:  'this' is an exact copy of ni and doesn't share
    //   any memory with it.  ni is unchanged.
    {
+     _Digits = new boolean [ni.getLength()];
+     setLength(ni.getLength()); 
+     for (int i = 0; i < getLength () - 1; i ++)
+     {
+      setDigit(i, ni.getDigit(i));
+     }
    }
 
 
@@ -241,7 +275,19 @@ public class Bint
    //   by 'this' is returned as a String of 0's and 1's and 'this' is 
    //   unchanged.
    {
-       return "";
+      String binary = "";
+      for (int i = 0; i < getLength (); i++)
+      {
+        if (getDigit(i) == false)
+        {
+          binary += "0";
+        }
+        if (getDigit(i) == true)
+        {
+          binary += "1";
+        }
+      }
+      return binary;
    } 
 
    // preconditions:  'this' is in the prescribed format
@@ -249,7 +295,17 @@ public class Bint
    //  by 'this' is returned as a String of digits between 0 and 9, inclusive.
    public String toString()
    {
-       return "";
+    int j = 1;
+    int number = 0;
+    for (int i = getLength() -1; i >= 0; i--)
+    {
+      if (getDigit(i) == true)
+      {
+        number += 2 ^ j;
+      }
+      j++;
+    }
+    return Integer.toString(number);
    }
 
    public boolean lt(Bint nj)
@@ -277,26 +333,82 @@ public class Bint
 
    public boolean gt (Bint nj)
    // like 'lt()' but test whether 'this' is greater than 'nj'
+  
    {
-       return false;
+       if (getLength() > nj.getLength())
+           return true;
+       else if (getLength() < nj.getLength())
+           return false;
+       else
+       {
+           for (int i = getLength() - 1; i >= 0; i--)
+           {
+               if (getDigit(i) && !nj.getDigit(i))
+                  return true;
+               else if (!getDigit(i) && nj.getDigit(i))
+                  return false;
+           }
+           return false;
+       }
    }
 
    public boolean eq (Bint nj)
    // like 'lt()' but tests whether 'this' is equal to 'nj'
-   {
-       return !lt(nj) && !nj.lt(this);
+    {
+       if (getLength() < nj.getLength())
+           return false;
+       else if (getLength() > nj.getLength())
+           return false;
+       else
+       {
+           for (int i = getLength() - 1; i >= 0; i--)
+           {
+               if (!getDigit(i) && nj.getDigit(i))
+                  return false;
+               else if (getDigit(i) && !nj.getDigit(i))
+                  return false;
+           }
+           return true;
+       }
    }
 
    public boolean le(Bint nj)
    // like 'lt()' but tests whether 'this' is less than or equal to 'nj'
    {
-       return false;
+       if (getLength() < nj.getLength())
+           return true;
+       else if (getLength() > nj.getLength())
+           return false;
+       else
+       {
+           for (int i = getLength() - 1; i >= 0; i--)
+           {
+               if (getDigit(i) && !nj.getDigit(i))
+               {
+                  return false;
+               }
+           }
+           return true;
+       }
    }
-
    public boolean ge (Bint nj)
    // like 'lt()' but tests whether 'this' is greater than or equal to 'nj'
    {
-       return false;
+       if (getLength() < nj.getLength())
+           return false;
+       else if (getLength() > nj.getLength())
+           return true;
+       else
+       {
+           for (int i = getLength() - 1; i >= 0; i--)
+           {
+               if (!getDigit(i) && nj.getDigit(i))
+               {
+                  return false;
+               }
+           }
+           return true;
+       }
    }
 
    public boolean isZero()
@@ -304,7 +416,12 @@ public class Bint
    // postcondition:  has returned 'true' if 'this' represents the value 0,
    //   and has returned 'false' otherwise.  'this' is unchanged.
    {
+    for (int i = 0; i < getLength (); i++)
+    {
+      if (getDigit (i))
        return false;
+    }
+    return true;
    }
 
    // The reason you need this:  When you write plus, below, the number of
@@ -321,7 +438,27 @@ public class Bint
    // postcondition:  'this' represents the same value in the prescribed
    //  format (no leading zeros)
    {
-       return;
+    int i = 0;
+    int j = 0;
+    if (isZero())
+    {
+      setLength(0);
+      _Digits = null;
+    }
+    while (!getDigit (i))
+    {
+      i++;
+    }
+    boolean [] _Digitsstripped = new boolean [getLength() - i];
+    for (int k = 0; k < getLength() -1; k++)
+    {
+      if (getDigit(k))
+      {
+        _Digitsstripped[j] = getDigit(k);
+        j++;
+      }
+    }
+    _Digits = _Digitsstripped;
    }
 
    public Bint plus (Bint nj)
@@ -381,10 +518,10 @@ public class Bint
           // "1.  logFloor, logCeiling",
           if (choice == 1)
           {
-	     Bint ni = new Bint();
+       Bint ni = new Bint();
              System.out.print("Enter a non-negative integer n >= 1:  ");
              int n = Input.nextInt();
-	     System.out.print("Enter a non-negative integer b >= 2:  ");
+       System.out.print("Enter a non-negative integer b >= 2:  ");
              int b = Input.nextInt();
              System.out.println("The floor of the log of that number is: " + ni.logFloor (n, b));     // insert calls 
              System.out.println("The ceiling of the log of that number is: " + ni.logCeiling (n, b));    //  here
@@ -403,8 +540,8 @@ public class Bint
              int i = Input.nextInt();
              Bint ni = new Bint(i);
              System.out.println("\nRunning toBase2 on the result of Bint(" + i 
-                      + ") yields: ");  // fill in the call
-             System.out.println("A call to getLength() on it returns: ");  // fill in the call
+                      + ") yields: " + ni.toBase2());  // fill in the call
+             System.out.println("A call to getLength() on it returns: " + ni.getLength());  // fill in the call
           }
           // "4.  getDigit",
           if (choice == 4)
@@ -413,8 +550,11 @@ public class Bint
              int i = Input.nextInt();
              int j = Input.nextInt();
              Bint ni = new Bint(i);
-             System.out.println("Constructed Bint: ");  // figure out how to call toString here
+             System.out.println("Constructed Bint: " + ni.toString());  // figure out how to call toString here
              System.out.print("The digit at position " + j + " is "); 
+             if (ni.getDigit(j))
+              System.out.print("1");
+             else System.out.print("0");
              // use an if-else statement here to print out 0 if false and 1 if true ..
           }
           // "5.  Copy constructor Bint(Bint)",
@@ -437,10 +577,10 @@ public class Bint
              Bint ni = new Bint(i);
              Bint nj = new Bint(j);
              System.out.println ("i < j: " + ni.lt(nj));
-             System.out.println ("i <= j: ");   // insert calls in these four lines to 
-             System.out.println ("i == j: ");   //  print out true/false values ...
-             System.out.println ("i >= j: ");
-             System.out.println ("i > j: ");
+             System.out.println ("i <= j: " + ni.le(nj));   // insert calls in these four lines to 
+             System.out.println ("i == j: " + ni.eq(nj));   //  print out true/false values ...
+             System.out.println ("i >= j: " + ni.ge(nj));
+             System.out.println ("i > j: " + ni.gt(nj));
           }
           // "7.  plus",
           else if (choice == 7)
