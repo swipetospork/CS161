@@ -466,15 +466,262 @@ public class Bint
    // postcondition:  'this' and 'nj' are unchanged and the sum of their
    //   represented values have been returned in the prescribed format
    {
-       return new Bint();
+    Bint added = new Bint (getLength() *nj. getLength() );
+    boolean carry = false;
+    int i = getLength() -1;
+    int j = nj.getLength()-1;
+    int k = added.getLength() -1;
+      if (this.le(nj))
+      {
+        while (j>=0)
+        {
+          while (i>=0)
+          {
+            if (!getDigit(i) && !nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, true);
+               carry = false;
+              }
+             else
+             { 
+               added.setDigit(k, false);
+               carry = false;
+             }
+            }
+            if (!getDigit(i) && nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, false);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, true);
+               carry = false;
+             }
+            }
+            if (getDigit(i) && !nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, false);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, true);
+               carry = false;
+             }
+            }
+            if (getDigit(i) && nj.getDigit(j))
+            {
+               if (carry)
+              {
+               added.setDigit(k, true);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, false);
+               carry = true;
+             } 
+            }
+            i--;
+            j--;
+            k--;
+          }
+          if (!getDigit(i) && !nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, true);
+               carry = false;
+              }
+             else
+             { 
+               added.setDigit(k, false);
+               carry = false;
+             }
+            }
+            if (!getDigit(i) && nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, false);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k , true);
+               carry = false;
+             }
+            }
+            if (getDigit(i) && !nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, false);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, true);
+               carry = false;
+             }
+            }
+            if (getDigit(i) && nj.getDigit(j))
+            {
+               if (carry)
+              {
+               added.setDigit(k, true);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, false);
+               carry = true;
+             } 
+            }
+            j--;
+            k--;
+        }
+        k--;
+      }
+       if (this.gt(nj))
+      {
+        while (i>=0)
+        {
+          while (j>=0)
+          {
+            if (!getDigit(i) && !nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, true);
+               carry = false;
+              }
+             else
+             { 
+               added.setDigit(k, false);
+               carry = false;
+             }
+            }
+            if (!getDigit(i) && nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, false);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, true);
+               carry = false;
+             }
+            }
+            if (getDigit(i) && !nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, false);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, true);
+               carry = false;
+             }
+            }
+            if (getDigit(i) && nj.getDigit(j))
+            {
+               if (carry)
+              {
+               added.setDigit(k, true);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, false);
+               carry = true;
+             } 
+            }
+            i--;
+            j--;
+            k--;
+          }
+          if (!getDigit(i) && !nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, true);
+               carry = false;
+              }
+             else
+             { 
+               added.setDigit(k, false);
+               carry = false;
+             }
+            }
+            if (!getDigit(i) && nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, false);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k , true);
+               carry = false;
+             }
+            }
+            if (getDigit(i) && !nj.getDigit(j))
+            {
+              if (carry)
+              {
+               added.setDigit(k, false);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, true);
+               carry = false;
+             }
+            }
+            if (getDigit(i) && nj.getDigit(j))
+            {
+               if (carry)
+              {
+               added.setDigit(k, true);
+               carry = true;
+              }
+             else
+             { 
+               added.setDigit(k, false);
+               carry = true;
+             } 
+            }
+            i--;
+            k--;
+        }
+        k--;
+      }
+      return added;
    }
+
 
    public Bint plus1 ()
    // precondition:  'this' is in the prescribed format
    // postcondition:  'this' is unchanged, and the value one higher
    //  than its represented value has been returned in the prescribed format.
    {
-      return new Bint();
+      Bint a1  = new Bint (1);
+      Bint add1 = new Bint ();
+      add1 = this.plus(a1);
+      return add1;
    }
 
    private static void printStrings(String[] Strings) 
@@ -590,7 +837,7 @@ public class Bint
              int j = Input.nextInt();
              Bint ni = new Bint(i);
              Bint nj = new Bint(j);
-             Bint nk = new Bint();   // replace call to this constructor with a call to plus.
+             Bint nk = ni.plus(nj);   // replace call to this constructor with a call to plus.
                                      //  Store the result in nk
              System.out.println(ni.toBase2() + " + " + nj.toBase2() + " = " 
                                 + nk.toBase2());
