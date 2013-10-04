@@ -1,4 +1,4 @@
-import java.util.Scanner;
+/*import java.util.Scanner;
 
 // This assignment is about developing a class that allows non-negative integers
 // of any size.  The representations of the integers are in binary in a "prescribed
@@ -34,7 +34,7 @@ import java.util.Scanner;
 // problem, even if that person is somebody who wrote a method that
 // is available in Java or in a Java package.
 
-/*  Bint:  Represents non-negative integers of arbitrary size */
+/*  Bint:  Represents non-negative integers of arbitrary size /*
 public class Bint
 {
    /******************************************************************/
@@ -855,3 +855,4 @@ public class Bint
        } while (choice != 0);
     }
 }
+*/
