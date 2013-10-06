@@ -18,15 +18,8 @@ public class SBint extends Bint{
     }
     public SBint(int val)
     {
-    	super(val);
-    	if (val >= 0)
-    	{
-    	   setSign(POSITIVE);
-    	}
-    	else
-    	{
-    		setSign(NEGATIVE);
-    	}
+    	super((val>=0)? val: (val * -1));
+    	setSign((val < 0)? NEGATIVE: POSITIVE);
     }
     public SBint (SBint ni)
     {
@@ -40,14 +33,13 @@ public class SBint extends Bint{
     public SBint (Bint ni)
     {
     	super(ni);
-    	this.setSign(POSITIVE);
+    	setSign(POSITIVE);
     }
     public String toBase2()
     {
     	String s = super.toBase2();
-    	if (getSign() == NEGATIVE)
-    		return ("-" + s);
-    	return s;
+    	if (!getSign()) return "-" + s;
+    	else return s;
     }
     public void shiftBy (int shift)
     {
@@ -87,18 +79,34 @@ public class SBint extends Bint{
     {
     	if(!this.getSign() && nj.getSign())
     	{
-    		nj.minus(this);
+    		if (super.gt(nj)){
+    			SBint result = new SBint (super.minus(nj));
+    			result.setSign(NEGATIVE);
+    			return result;
+    		}
+    		Bint njs = new Bint (nj);
+    		SBint result = new SBint (njs.minus(this));
+    		return result;
     	}
     	else if (this.getSign() && !nj.getSign())
     	{
-    		this.minus(nj);
+    		if (super.lt(nj)){
+    			Bint njs = new Bint (nj);
+    			SBint result = new SBint (njs.minus(this));
+    			result.setSign(NEGATIVE);
+    			return result;
+    		}	
+    		SBint result = new SBint (super.minus(nj));
+    		return result;
     	}
     	else if (!this.getSign() && !nj.getSign())
     	{
-    		this.plus(nj);
-    		setSign(NEGATIVE);
+    		SBint result = new SBint(super.plus(nj));
+    		result.setSign(NEGATIVE);
+    		return result;
     	}
-    	return this.plus(nj);
+		SBint result = new SBint (super.plus(nj));
+		return result;
     }
     public SBint plus1 ()
     {
@@ -111,10 +119,9 @@ public class SBint extends Bint{
     		return new SBint(i);
     	return new SBint (-i);
     }
-    public Bint minus (Bint nj)
+    public SBint minus (SBint nj)
     {
-    	// return this.plus(nj.negative());
-    	return new SBint(0);
+    	return this.plus(nj.negative());
     }
     public SBint mult (SBint ni)
     {
@@ -126,16 +133,31 @@ public class SBint extends Bint{
     	return s;
     }
     public SBint toThePower (int n)
-    {
-    	return new SBint();
+    {	
+    	int k = n;
+    	SBint result = new SBint(this);
+    	while (n > 1){
+    		result = result.mult(this);
+    		n-=1;
+    	}
+    	if (k%2 == 0)
+    		result.setSign(POSITIVE);
+    	return result;
     }
     public SBint div (SBint nj)
     {
-    	return new SBint(0);
+    	SBint result = new SBint(super.div(nj));
+    	if (!this.getSign() || !nj.getSign())
+    		result.setSign(NEGATIVE);
+    	if (!this.getSign() && !nj.getSign())
+    		result.setSign(POSITIVE);
+    	if (result.isZero())
+    		result.setSign(POSITIVE);
+    	return result;
     }
     public String toString()
     {
-    	return new String ("");
+    	return ((getSign())? super.toString(): "-" + super.toString());
     }
     private static void printStrings(String[] Strings) 
     {
@@ -160,7 +182,9 @@ public class SBint extends Bint{
          "9.  negative",
          "10. minus",
          "11. mult",
+         "12. toString",
          "13. toThePower",
+         "14. div",
       };
           
 
@@ -197,21 +221,18 @@ public class SBint extends Bint{
           {
              System.out.print("Enter a non-negative integer i:  ");
              int i = Input.nextInt();
-             Bint ni = new Bint(i);
-             Bint nj = new Bint(ni);
-             System.out.println("Constructed Bint: " + ni.toBase2());
-             System.out.println("Bint returned by copy constructor: " 
+             SBint ni = new SBint(i);
+             SBint nj = new SBint(ni);
+             System.out.println("Constructed SBint: " + ni.toBase2());
+             System.out.println("SBint returned by copy constructor: " 
                                  + nj.toBase2());
           }
           else if (choice == 4)
           {
-             System.out.print("Enter a non-negative integer i and a shift j  ");
+             System.out.print("Enter an int i ");
              int i = Input.nextInt();
-             int j = Input.nextInt();
-             Bint ni = new Bint(i);
-             System.out.println("Constructed Bint: " + ni.toBase2());
-             ni.shiftBy(j);
-             System.out.println("After shift by j: " + ni.toBase2());
+             SBint ni = new SBint(i);
+             System.out.println("Constructed SBint: " + ni.toBase2());
           }
           else if (choice == 5)
           {
@@ -228,12 +249,12 @@ public class SBint extends Bint{
           }
           else if (choice == 6)
           {
-             System.out.print("Enter two non-negative integers i  and j  ");
+             System.out.print("Enter two integers i  and j  ");
              int i = Input.nextInt();
              int j = Input.nextInt();
-             Bint ni = new Bint(i);
-             Bint nj = new Bint(j);
-             Bint nk = ni.plus(nj);
+             SBint ni = new SBint(i);
+             SBint nj = new SBint(j);
+             SBint nk = ni.plus(nj);
              System.out.println(ni.toBase2() + " + " + nj.toBase2() + " = " 
                                 + nk.toBase2());
           }
@@ -259,45 +280,61 @@ public class SBint extends Bint{
           }
           else if (choice == 9)
           {
-             System.out.print("Enter two non-negative integers i  and j  ");
+             System.out.print("Enter an integer i ");
              int i = Input.nextInt();
-             int j = Input.nextInt();
-             Bint ni = new Bint(i);
-             Bint nj = new Bint(j);
-             Bint nk = ni.minus (nj);
-             System.out.println(ni.toBase2() + " - " + nj.toBase2() 
-                                + " = " + nk.toBase2());
+             SBint ni = new SBint(i);
+             SBint nk = ni.negative ();
+             System.out.println(ni.toBase2() + " negative: " +  nk.toBase2());
           }
          
           else if (choice == 10)
           {
-             System.out.print("Enter two non-negative integers i  and j w/ j > 0  ");
+             System.out.print("Enter two integers i ");
              int i = Input.nextInt();
              int j = Input.nextInt();
-             Bint ni = new Bint(i);
-             Bint nj = new Bint(j);
-             Bint nk = ni.mod (nj);
-             System.out.println(ni.toBase2() + " mod " + nj.toBase2() 
+             SBint ni = new SBint(i);
+             SBint nj = new SBint(j);
+             SBint nk = ni.minus (nj);
+             System.out.println(ni.toBase2() + " minus " + nj.toBase2() 
                                 + " = " + nk.toBase2());
           }
           else if (choice == 11)
           {
-             System.out.print("Enter two non-negative integers i, j with j > 0  ");
+             System.out.print("Enter two integers i ");
              int i = Input.nextInt();
              int j = Input.nextInt();
-             Bint ni = new Bint(i);
-             Bint nj = new Bint(j);
-             Bint nk = ni.div (nj);
-             System.out.println(ni.toBase2() + " div " + nj.toBase2() 
+             SBint ni = new SBint(i);
+             SBint nj = new SBint(j);
+             SBint nk = ni.mult (nj);
+             System.out.println(ni.toBase2() + " mult " + nj.toBase2() 
                                 + " = " + nk.toBase2());
+          }
+          else if (choice == 12)
+          {
+             System.out.print("Enter an integer i:  ");
+             int i = Input.nextInt();
+             SBint ni = new SBint(i);
+             System.out.println("toString:  " + ni.toString());
           }
           else if (choice == 13)
           {
-             System.out.print("Enter a non-negative integer i:  ");
+             System.out.print("Enter an integer i and a power n:  ");
              int i = Input.nextInt();
-             Bint ni = new Bint(i);
-             System.out.println("Binary representation:  " + ni.toBase2());
-             System.out.println("Conversion back to int: " + ni.toInt());
+             int n = Input.nextInt();             
+             SBint ni = new SBint(i);
+             SBint nk = ni.toThePower (n);
+             System.out.println("i ^ n:  " + nk.toBase2());
+          }
+          else if (choice == 14)
+          {
+             System.out.print("Enter two integers i ");
+             int i = Input.nextInt();
+             int j = Input.nextInt();
+             SBint ni = new SBint(i);
+             SBint nj = new SBint(j);
+             SBint nk = ni.div (nj);
+             System.out.println(ni.toBase2() + " / " + nj.toBase2() 
+                                + " = " + nk.toBase2());
           }
        } while (choice != 0);
     }
