@@ -374,20 +374,35 @@ public class Bint
        }
    }
 
-   public Bint mult (Bint ni)
+  /* public Bint mult (Bint nj)
    // precondition:  'this' and 'nj' are in the prescribed format
    // postcondition:  'this' and 'nj' are unchanged, and this's value
    //  times nj's value has been returned in the prescribed format.
    
    {
-       int njLength = getLength();
-       Bint niShift = new Bint (ni);
+       Bint njShift = new Bint (nj);
        Bint total = new Bint(0);
-       for (int i = 0; i < njLength; i++)
+       for (int i = 0; i < this.getLength() ; i++)
        {
            if (getDigit(i))
-               total = total.plus (niShift);
-           niShift.shiftBy(1);
+               total = total.plus (njShift);
+           njShift.shiftBy(1);
+       }
+       return total;
+   }*/
+   public Bint mult (Bint nj)
+   // precondition:  'this' and 'nj' are in the prescribed format
+   // postcondition:  'this' and 'nj' are unchanged, and this's value
+   //  times nj's value has been returned in the prescribed format.
+   
+   {
+       Bint njShift = new Bint (nj);
+       Bint total = new Bint(0);
+       for (int i = 0; i < getLength(); i++)
+       {
+           if (getDigit(i))
+               total = total.plus (njShift);
+           njShift.shiftBy(1);
        }
        return total;
    }

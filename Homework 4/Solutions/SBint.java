@@ -98,7 +98,7 @@ public class SBint extends Bint{
     		}	
     		SBint result = new SBint (super.minus(nj));
     		return result;
-    	}
+    	}6
     	else if (!this.getSign() && !nj.getSign())
     	{
     		SBint result = new SBint(super.plus(nj));
