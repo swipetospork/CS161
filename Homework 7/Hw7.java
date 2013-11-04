@@ -39,7 +39,7 @@ public class Hw7 {
         int choice = -1; // Records the option number the user selected
                          //   from the menu
         int [] Array1 = new int [] {1, 2, 3, 4, 5};
-        int Size = 4;
+        int Size = 2;
 
         do
         {
