@@ -32,17 +32,17 @@ public class Homework9 {
 		double [] [] matrix = new double [n+1] [w+1];
 		for (int i = 0; i <= n; i ++)
 		{
-			for (int j = 0; j <=w; j++)
+			for (int j = 0; j <= w; j++)
 			{
-				if (i == 0 || j == 0)
+				if ((i == 0 || j == 0))
 					matrix [i] [j] = 0;
 				else {
-					if (W[i] > j)
+					if (W[i-1] > j)
 						matrix [i] [j] = matrix [i-1] [j];
 					else
 					{
-						if (Profit[i] + matrix [i-1] [j-W[i]] > matrix [i-1] [j])
-							matrix [i] [j] = Profit[i] + matrix [i-1] [j-W[i]];
+						if (Profit[i-1] + matrix [i-1] [j-W[i-1]] > matrix [i-1] [j])
+							matrix [i] [j] = Profit[i-1] + matrix [i-1] [j-W[i-1]];
 						else matrix [i] [j] = matrix [i-1] [j];
 					}
 				}
@@ -85,9 +85,9 @@ public class Homework9 {
              	}
              } 
              else if (choice == 2) {
-             	int	[] W = new int [] {0,4,1,2};
-             	double	[] P = new double [] {0,2,1,4};
-             	int n = W.length-1; 
+             	int	[] W = new int [] {4,1,2,0};
+             	double	[] P = new double [] {2,0,4,0};
+             	int n = W.length; 
              	int w = 5;
              	double [] [] matrix = Truck (n, w, W, P);
              	for (int i = 0; i <= n; i++)
