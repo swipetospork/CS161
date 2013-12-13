@@ -49,7 +49,7 @@ public class Node {
 	 		System.out.println ("Are you thinking of a " + Root.getQuestion() + "?");
 	 		if (Input.nextLine().equals("y"))
 	 		{
-	 			System.out.println ("WHOOP DE FUCKING DOO");
+	 			System.out.println ("MUAHAHA I HAVE WON!!! AND NOW I SHALL RETURN...... wait for it....... NULL!!!!!!");
 	 			return null;
 	 		}
 	 		else 
